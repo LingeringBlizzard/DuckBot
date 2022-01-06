@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#Duck Bot
 import discord
 import os
 from discord.utils import get
