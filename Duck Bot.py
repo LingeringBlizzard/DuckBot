@@ -6,47 +6,6 @@ from duckbottoken import duckbot
 client = discord.Client()
 file = ""
 
-def check(reaction, user):
-	if  user != client.user and str(reaction.emoji) == '🇺🇸':
-		return True
-	elif user != client.user and  str(reaction.emoji) == '🇺🇲':
-		return True
-	elif  user != client.user and str(reaction.emoji) == '🇮🇳':
-		return True
-	elif  user != client.user and str(reaction.emoji) == '🇬🇧':
-		return True
-	elif  user != client.user and str(reaction.emoji) == '🇦🇺':
-		return True
-	elif  user != client.user and str(reaction.emoji) == '🇨🇳':
-		return True
-	else:
-		return False
-def check1(reaction, user):
-	if  user != client.user and str(reaction.emoji) != '🇺🇸':
-		return False
-	elif user != client.user and  str(reaction.emoji) != '🇺🇲':
-		return False
-	elif  user != client.user and str(reaction.emoji) != '🇮🇳':
-		return False
-	elif  user != client.user and str(reaction.emoji) != '🇬🇧':
-		return False
-	elif  user != client.user and str(reaction.emoji) != '🇦🇺':
-		return False
-	elif  user != client.user and str(reaction.emoji) != '🇨🇳':
-		return False
-	else:
-		return True
-def checkrandom(reaction, user):
-	if  user != client.user and str(reaction.emoji) == '🦆':
-		return True
-	elif user != client.user and  str(reaction.emoji) == '🎮':
-		return True
-	elif  user != client.user and str(reaction.emoji) == '📣':
-		return True
-	else:
-		return False
-
-
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
