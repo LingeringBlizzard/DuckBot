@@ -12,10 +12,6 @@ client = discord.Client(intents = intents)
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 @client.event
-async def on_member_join(member):
-	Role1 = discord.utils.get(member.guild.roles, id = 911359654599200859)
-	await member.add_roles(Role1)
-@client.event
 async def on_raw_reaction_add(payload):
 	user = payload.member
 	if payload.message_id == 928522305909424169:
@@ -67,9 +63,6 @@ async def on_message(message):
 
 
 	if message.author.guild_permissions.administrator == True:
-
-		if message.content.startswith('$purge'):
-			await message.channel.purge(limit=100)
 		if message.content.startswith('$roles'):
 			run = True
 			await message.delete()
