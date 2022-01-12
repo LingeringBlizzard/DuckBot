@@ -7,13 +7,25 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix="$")
 file = ""
 client = discord.Client()
-@bot.command(brief='This command will mute people', help='This command will mute people for you')
+@bot.command(pass_context=True,brief='This command will mute people', help='This command will mute people for you')
 async def mute(ctx, member: discord.Member):
 	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
-		role = discord.utils.get(member.server.roles, name='Muted')
-		await bot.add_roles(member, role)
-		embed=discord.Embed(title="User Muted!", description="**{0}** was muted by **{1}**!".format(member, ctx.message.author), color=0xff00f6)
-		await bot.say(embed=embed)
+		mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
+
+		await member.add_roles(mutedRole)
+		await member.send(f" you have muted from: - {ctx.guild.name}")
+		embed = discord.Embed(title="mute", description=f" muted-{member.mention}",colour=discord.Colour.light_gray())
+		await ctx.send(embed=embed)
+@bot.command()
+async def unmute(ctx, member: discord.Member):
+	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
+
+		mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
+
+		await member.remove_roles(mutedRole)
+		await member.send(f" you have unmutedd from: - {ctx.guild.name}")
+		embed = discord.Embed(title="unmute", description=f" unmuted-{member.mention}",colour=discord.Colour.light_gray())
+		await ctx.send(embed=embed)
 @bot.command(pass_context=True, brief='This will change a users nickname', help='This command will change the nickname of a user')
 async def nick(ctx, member: discord.Member, nick):
 	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
