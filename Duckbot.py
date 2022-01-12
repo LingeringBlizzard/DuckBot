@@ -7,6 +7,13 @@ from discord.ext import commands
 bot = commands.Bot(command_prefix="$")
 file = ""
 client = discord.Client()
+@bot.command(brief='This command will mute people', help='This command will mute people for you')
+async def mute(ctx, member: discord.Member):
+	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
+		role = discord.utils.get(member.server.roles, name='Muted')
+        await bot.add_roles(member, role)
+        embed=discord.Embed(title="User Muted!", description="**{0}** was muted by **{1}**!".format(member, ctx.message.author), color=0xff00f6)
+        await bot.say(embed=embed)
 @bot.command(pass_context=True, brief='This will change a users nickname', help='This command will change the nickname of a user')
 async def nick(ctx, member: discord.Member, nick):
 	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
