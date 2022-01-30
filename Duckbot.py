@@ -5,7 +5,6 @@ import discord
 import time
 import urllib.request
 from bs4 import BeautifulSoup
-import extractdata
 import os
 from discord.utils import get
 from duckbottoken import duckbot
