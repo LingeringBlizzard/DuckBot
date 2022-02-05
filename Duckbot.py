@@ -148,16 +148,16 @@ async def join(ctx):
 async def duck(ctx):
 	number = 0
 	embed = discord.Embed(title="Duck Squadron", description="[Click here to see full stats of Duck](https://stats.warbrokers.io/squads/Duck)")
-	await ctx.send("Please Wait I am getting the data")
+	message = await ctx.send("Please Wait I am getting the data")
 	try:
 		squadmemberlink, squadmembernames = getdata()
 		for squadmembers in squadmemberlink:
 			squadmembers = 'https://stats.warbrokers.io'+squadmembers
 			embed.add_field(name='\u200b', value=" ["+squadmembernames[number]+"]"+"("+squadmembers+")")
 			number = number + 1
-		await ctx.message.delete()
+		await message.delete()
 		await ctx.send(embed=embed)
 	except:
-		await ctx.send(embed=embed)
+		await ctx.send("Sorry There was a error")
 					
 bot.run(duckbot)
