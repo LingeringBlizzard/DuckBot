@@ -26,9 +26,9 @@ def getdata():
 		squadmembernames.append(squadmember)
 		squadmemberlink = squadmembers.get("href")
 		squadmemberlinks.append(squadmemberlink)
-	for squadmembers in soup.fine_all("div", class_="squad-player-number-box-header"):
-		squadmembers = squadmembers.find('div')
-		print(squadmembers)
+	# for squadmembers in soup.fine_all("div", class_="squad-player-number-box-header"):
+	# 	squadmembers = squadmembers.find('div')
+	# 	print(squadmembers)
 	return squadmemberlinks, squadmembernames
 @bot.command(pass_context=True,brief='This command will mute people', help='This command will mute people for you')
 async def mute(ctx, member: discord.Member):
@@ -149,13 +149,14 @@ async def duck(ctx):
 	number = 0
 	embed = discord.Embed(title="Duck Squadron", description="[Click here to see full stats of Duck](https://stats.warbrokers.io/squads/Duck)")
 	await ctx.send("Please Wait I am getting the data")
-	squadmemberlink, squadmembernames = getdata()
-	print(squadmembernames)
-	for squadmembers in squadmemberlink:
-		squadmembers = 'https://stats.warbrokers.io'+squadmembers
-		embed.add_field(name='\u200b', value=" ["+squadmembernames[number]+"]"+"("+squadmembers+")")
-		number = number + 1
-		print("running")
-	await ctx.send(embed=embed)
+	try:
+		squadmemberlink, squadmembernames = getdata()
+		for squadmembers in squadmemberlink:
+			squadmembers = 'https://stats.warbrokers.io'+squadmembers
+			embed.add_field(name='\u200b', value=" ["+squadmembernames[number]+"]"+"("+squadmembers+")")
+			number = number + 1
+		await ctx.send(embed=embed)
+	except:
+		await ctx.send(embed=embed)
 					
 bot.run(duckbot)
