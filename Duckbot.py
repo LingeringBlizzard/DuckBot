@@ -14,7 +14,7 @@ intents.members = True
 bot = commands.Bot(command_prefix="$", intents=intents)
 file = ""
 client = discord.Client()
-def getdata():
+def getsquadnames():
 	content = urllib.request.urlopen('https://stats.warbrokers.io/squads/Duck')
 	read_content = content.read()
 	soup = BeautifulSoup(read_content,'html.parser')
@@ -30,29 +30,37 @@ def getdata():
 	# 	squadmembers = squadmembers.find('div')
 	# 	print(squadmembers)
 	return squadmemberlinks, squadmembernames
-@bot.command(pass_context=True,brief='This command will mute people', help='This command will mute people for you')
-async def mute(ctx, member: discord.Member):
-	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
-		mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
-
-		await member.add_roles(mutedRole)
-		await member.send(f" you have muted from: - {ctx.guild.name}")
-		embed = discord.Embed(title="mute", description=f" muted-{member.mention}",colour=discord.Colour.light_gray())
-		await ctx.send(embed=embed)
 @bot.command()
-async def muteuser(ctx, user : discord.Member, duration = 0,*, unit = None):
-	roleobject = discord.utils.get(ctx.guild.roles, name="Muted")
-	await ctx.send(f":white_check_mark: Muted {user} for {duration}{unit}")
-	await user.add_roles(roleobject)
+async def mute(ctx, user : discord.Member, duration = 0,*, unit = None):
+	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
+		roleobject = discord.utils.get(ctx.guild.roles, name="Muted")
+		if roleobject in user.roles:
+			await ctx.send(f"Sorry I can not mute {user} they are all ready muted")
+			return
+		await user.add_roles(roleobject)
+		if (duration == 0 and unit == None):
+			duration = ":infinity:"
+			unit = ""
+			await ctx.send(f":white_check_mark: Muted {user} for {duration}{unit}")
+			return
+		await ctx.send(f":white_check_mark: Muted {user} for {duration}{unit}")
 
-	if unit == "s":
-		wait = 1 * duration
-		await asyncio.sleep(wait)
-	elif unit == "m":
-		wait = 60 * duration
-		await asyncio.sleep(wait)
-	await user.remove_roles(roleobject)
-	await ctx.send(f":white_check_mark: {user} was unmuted")
+
+		if unit == "s":
+			wait = 1 * duration
+			await asyncio.sleep(wait)
+		elif unit == "m":
+			wait = 60 * duration
+			await asyncio.sleep(wait)
+		elif unit == "h":
+			wait = 6600 * duration
+			await asyncio.sleep(wait)
+		elif unit == None:
+			wait = wait = 6600 * duration
+			await asyncio.sleep(wait)
+		if (user.guild.roles == roleobject):
+			await user.remove_roles(roleobject)
+			await ctx.send(f":white_check_mark: {user} was unmuted")
 @bot.command()
 async def unmute(ctx, member: discord.Member):
 	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
@@ -97,49 +105,53 @@ async def squadron(ctx, squadron):
 	run = False
 	squadronname = squadron + " Squadron Information"
 	embed= discord.Embed(title=squadronname.upper(), description="Information about " + squadron + " Squadron")
-	if str(squadron).lower() == "black":
-		link = 'https://cdn.discordapp.com/attachments/931223718632521768/933463212245024778/unknown.png'
-		guild = ctx.guild.get_role(911352519517700148)
-		user = await bot.fetch_user(667431741245358096)
-		usernames = [m.name for m in guild.members]
-		run = True
-	elif str(squadron).lower() == "gold":
-		link = 'https://cdn.discordapp.com/attachments/931223718632521768/933489928774508595/goldsquadronreqs.png'
-		guild = ctx.guild.get_role(911352074200043552)
-		user = await bot.fetch_user(814177227688247296)
-		usernames = [m.name for m in guild.members]
-		run = True
-	elif str(squadron).lower() == "red":
-		link = 'https://cdn.discordapp.com/attachments/931223718632521768/933490419105398804/redsquadronreqs.png'
-		guild = ctx.guild.get_role(911349152829566997)
-		user = await bot.fetch_user(804739629483032587)
-		usernames = [m.name for m in guild.members]
-		run = True
-	elif str(squadron).lower() == "gray":
-		guild = ctx.guild.get_role(911352664472821760)
-		link = 'https://media.discordapp.net/attachments/931223718632521768/933499430450135092/graysquadronreqs.png'
-		user = None
-		usernames = [m.name for m in guild.members]
-		run = True
-	elif str(squadron).lower() == "green":
-		guild = ctx.guild.get_role(911352765006102539)
-		link = 'https://cdn.discordapp.com/attachments/931223718632521768/933500137693655050/unknown.png'
-		user = None
-		usernames = [m.name for m in guild.members]
-		run = True
-	else:
-		await ctx.send("That is not a valid Squadron")
-	if run is True:
-		if user == None:
-			embed.set_image(url=link)
-			embed.add_field(name="Members Of Squadron", value=separator.join(usernames))
-			await ctx.send(embed=embed)
+	try:
+		if str(squadron).lower() == "black":
+			link = 'https://cdn.discordapp.com/attachments/931223718632521768/933463212245024778/unknown.png'
+			guild = ctx.guild.get_role(911352519517700148)
+			user = await bot.fetch_user(667431741245358096)
+			usernames = [m.name for m in guild.members]
+			run = True
+		elif str(squadron).lower() == "gold":
+			link = 'https://cdn.discordapp.com/attachments/931223718632521768/933489928774508595/goldsquadronreqs.png'
+			guild = ctx.guild.get_role(911352074200043552)
+			user = await bot.fetch_user(814177227688247296)
+			usernames = [m.name for m in guild.members]
+			run = True
+		elif str(squadron).lower() == "red":
+			link = 'https://cdn.discordapp.com/attachments/931223718632521768/933490419105398804/redsquadronreqs.png'
+			guild = ctx.guild.get_role(911349152829566997)
+			user = await bot.fetch_user(804739629483032587)
+			usernames = [m.name for m in guild.members]
+			run = True
+		elif str(squadron).lower() == "gray":
+			guild = ctx.guild.get_role(911352664472821760)
+			link = 'https://media.discordapp.net/attachments/931223718632521768/933499430450135092/graysquadronreqs.png'
+			user = None
+			usernames = [m.name for m in guild.members]
+			run = True
+		elif str(squadron).lower() == "green":
+			guild = ctx.guild.get_role(911352765006102539)
+			link = 'https://cdn.discordapp.com/attachments/931223718632521768/933500137693655050/unknown.png'
+			user = None
+			usernames = [m.name for m in guild.members]
+			run = True
 		else:
-			embed.add_field(name="Squadron Leader", value=user.display_name, inline=False)
-			embed.set_thumbnail(url=user.avatar_url)
-			embed.set_image(url=link)
-			embed.add_field(name="Members Of Squadron", value=separator.join(usernames))
-			await ctx.send(embed=embed)
+			await ctx.send("That is not a valid Squadron")
+		if run is True:
+			if user == None:
+				embed.set_image(url=link)
+				embed.add_field(name="Members Of Squadron", value=separator.join(usernames))
+				await ctx.send(embed=embed)
+			else:
+				embed.add_field(name="Squadron Leader", value=user.display_name, inline=False)
+				embed.set_thumbnail(url=user.avatar_url)
+				embed.set_image(url=link)
+				embed.add_field(name="Members Of Squadron", value=separator.join(usernames))
+				await ctx.send(embed=embed)
+	except:
+		ctx.send("Sorry this command did not work properly please try again if this issue continuse please contact LingeringBlizzard")
+
 @bot.command()
 async def join(ctx):
 	await ctx.message.delete()
@@ -150,7 +162,7 @@ async def duck(ctx):
 	embed = discord.Embed(title="Duck Squadron", description="[Click here to see full stats of Duck](https://stats.warbrokers.io/squads/Duck)")
 	message = await ctx.send("Please Wait I am getting the data")
 	try:
-		squadmemberlink, squadmembernames = getdata()
+		squadmemberlink, squadmembernames = getsquadnames()
 		for squadmembers in squadmemberlink:
 			squadmembers = 'https://stats.warbrokers.io'+squadmembers
 			embed.add_field(name='\u200b', value=" ["+squadmembernames[number]+"]"+"("+squadmembers+")")
@@ -158,6 +170,6 @@ async def duck(ctx):
 		await message.delete()
 		await ctx.send(embed=embed)
 	except:
-		await ctx.send("Sorry There was a error")
+		await ctx.send("Sorry, There was a error")
 					
 bot.run(duckbot)
