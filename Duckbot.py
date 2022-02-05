@@ -35,7 +35,7 @@ async def mute(ctx, user : discord.Member, duration = 0,*, unit = None):
 	if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
 		roleobject = discord.utils.get(ctx.guild.roles, name="Muted")
 		if roleobject in user.roles:
-			await ctx.send(f"Sorry I can not mute {user} they are all ready muted")
+			await ctx.send(f"Sorry, I cannot mute {user}, they are already muted")
 			return
 		await user.add_roles(roleobject)
 		if (duration == 0 and unit == None):
@@ -68,7 +68,7 @@ async def unmute(ctx, member: discord.Member):
 		mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
 
 		await member.remove_roles(mutedRole)
-		await member.send(f" you have unmutedd from: - {ctx.guild.name}")
+		await member.send(f" you have been unmuted from: - {ctx.guild.name}")
 		embed = discord.Embed(title="unmute", description=f" unmuted-{member.mention}",colour=discord.Colour.light_gray())
 		await ctx.send(embed=embed)
 @bot.command(pass_context=True, brief='This will change a users nickname', help='This command will change the nickname of a user')
@@ -98,7 +98,7 @@ async def accept(ctx, member: discord.Member):
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Sorry that is not a valid command please use $help to get a list off all the vaild commands")
+        await ctx.send("Sorry, that is not a valid command. Please use $help to get a list of all the vaild commands")
 @bot.command()
 async def squadron(ctx, squadron):
 	separator = ", "
@@ -150,7 +150,7 @@ async def squadron(ctx, squadron):
 				embed.add_field(name="Members Of Squadron", value=separator.join(usernames))
 				await ctx.send(embed=embed)
 	except:
-		ctx.send("Sorry this command did not work properly please try again if this issue continuse please contact LingeringBlizzard")
+		ctx.send("Sorry, this command did not work properly. Please try again. If this issue continues, please contact LingeringBlizzard")
 
 @bot.command()
 async def join(ctx):
@@ -160,7 +160,7 @@ async def join(ctx):
 async def duck(ctx):
 	number = 0
 	embed = discord.Embed(title="Duck Squadron", description="[Click here to see full stats of Duck](https://stats.warbrokers.io/squads/Duck)")
-	message = await ctx.send("Please Wait I am getting the data")
+	message = await ctx.send("Please wait, I am getting the data")
 	try:
 		squadmemberlink, squadmembernames = getsquadnames()
 		for squadmembers in squadmemberlink:
@@ -170,6 +170,6 @@ async def duck(ctx):
 		await message.delete()
 		await ctx.send(embed=embed)
 	except:
-		await ctx.send("Sorry, There was a error")
+		await ctx.send("Sorry, there was a error")
 					
 bot.run(duckbot)
