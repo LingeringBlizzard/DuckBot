@@ -155,7 +155,7 @@ async def duck(ctx):
 			squadmembers = 'https://stats.warbrokers.io'+squadmembers
 			embed.add_field(name='\u200b', value=" ["+squadmembernames[number]+"]"+"("+squadmembers+")")
 			number = number + 1
-		ctx.message.delete()
+		await ctx.message.delete()
 		await ctx.send(embed=embed)
 	except:
 		await ctx.send(embed=embed)
