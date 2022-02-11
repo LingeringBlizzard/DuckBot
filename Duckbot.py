@@ -121,7 +121,7 @@ async def squadron(ctx, squadron):
 		elif str(squadron).lower() == "red":
 			link = 'https://cdn.discordapp.com/attachments/931223718632521768/933490419105398804/redsquadronreqs.png'
 			guild = ctx.guild.get_role(911349152829566997)
-			user = await bot.fetch_user(804739629483032587)
+			user = None
 			usernames = [m.name for m in guild.members]
 			run = True
 		elif str(squadron).lower() == "gray":
