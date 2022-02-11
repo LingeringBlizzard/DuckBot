@@ -150,7 +150,7 @@ async def squadron(ctx, squadron):
 				embed.add_field(name="Members Of Squadron", value=separator.join(usernames))
 				await ctx.send(embed=embed)
 	except:
-		ctx.send("Sorry, this command did not work properly. Please try again. If this issue continues, please contact LingeringBlizzard")
+		await ctx.send("Sorry, this command did not work properly. Please try again. If this issue continues, please contact LingeringBlizzard")
 
 @bot.command()
 async def join(ctx):
