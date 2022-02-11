@@ -16,7 +16,7 @@ bot = commands.Bot(command_prefix="$", intents=intents)
 file = ""
 client = discord.Client()
 
-# This Function gets squadron information
+# This function gets squadron information
 def getsquadnames():
     content = urllib.request.urlopen('https://stats.warbrokers.io/squads/Duck')
     read_content = content.read()
@@ -91,9 +91,9 @@ async def nick(ctx, member: discord.Member, nick):
 @bot.command(breif='This will remove the amount of messages you specify')
 async def remove(ctx, number):
     if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
-        # delete message
+        # deletes the message
         await ctx.message.delete()
-        # Purge the number that is giving
+        # Purge the number that is given
         await ctx.channel.purge(limit=int(number))
 
 
@@ -101,9 +101,9 @@ async def remove(ctx, number):
 async def invite(ctx):
     if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
         await ctx.message.delete()
-        # creating invite link
+        # creates an invite link
         invitelink = await ctx.channel.create_invite(max_uses=1, unique=True)
-        # dming it to the person
+        # direct messages it to the person
         await ctx.author.send(invitelink)
 
 
