@@ -16,7 +16,7 @@ async def on_raw_reaction_add(payload):
 	user = payload.member
 	if payload.message_id == 944014177570291713:
 		if str(payload.emoji) == '🇺🇸':
-			role = get(user.guild.roles, name="USA_Central")
+			role = get(user.guild.roles, name="US_Central")
 			await payload.member.add_roles(role)
 		elif str(payload.emoji) == '🇺🇲':
 			role = get(user.guild.roles, name="USA_West")
