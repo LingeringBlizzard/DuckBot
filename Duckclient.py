@@ -19,7 +19,7 @@ async def on_raw_reaction_add(payload):
 			role = get(user.guild.roles, name="US_Central")
 			await payload.member.add_roles(role)
 		elif str(payload.emoji) == '🇺🇲':
-			role = get(user.guild.roles, name="USA_West")
+			role = get(user.guild.roles, name="US_West")
 			await payload.member.add_roles(role)
 		elif str(payload.emoji) == '🇮🇳':
 			role = get(user.guild.roles, name="India")
