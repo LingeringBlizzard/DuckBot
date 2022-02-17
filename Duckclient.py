@@ -14,7 +14,7 @@ async def on_ready():
 @client.event
 async def on_raw_reaction_add(payload):
 	user = payload.member
-	if payload.message_id == 928522305909424169:
+	if payload.message_id == 944014177570291713:
 		if str(payload.emoji) == '🇺🇸':
 			role = get(user.guild.roles, name="USA")
 			await payload.member.add_roles(role)
@@ -38,7 +38,7 @@ async def on_raw_reaction_add(payload):
 		await message.remove_reaction(payload.emoji, payload.member)
 
 		
-	if payload.message_id == 928522319259893780:
+	if payload.message_id == 944014579460079687:
 		reaction = payload.emoji
 		user = payload.member
 		if str(reaction) == '📣':
