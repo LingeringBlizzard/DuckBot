@@ -47,9 +47,6 @@ async def on_raw_reaction_add(payload):
 		elif str(reaction) == '🎮':
 			role = get(user.guild.roles, name="Game Night")
 			await user.add_roles(role)
-		elif str(reaction) == '🦆':
-			role = get(user.guild.roles, name="interested in joining")
-			await user.add_roles(role)
 		channel = client.get_channel(payload.channel_id)
 		message = await channel.fetch_message(payload.message_id)
 		await message.remove_reaction(payload.emoji, payload.member)
@@ -107,8 +104,8 @@ async def on_message(message):
 			run = True
 			await message.delete()
 			channel = message.channel
-			msg = await channel.send('Random Roles\n🦆 Interested in Joining\n🎮 game night ping\n📣 announcements')
-			await msg.add_reaction('🦆')
+			msg = await channel.send('Random Roles\n:calendar: Server Updates\n🎮 game night ping\n📣 announcements')
+			await msg.add_reaction(':calendar:')
 			await msg.add_reaction('🎮')
 			await msg.add_reaction('📣')
 			global file2
