@@ -16,6 +16,32 @@ bot = commands.Bot(command_prefix="$", intents=intents)
 file = ""
 client = discord.Client()
 
+@bot.event
+async def on_message(message):
+	print(message.channel.id)
+	if message.channel.id == 944297505821188157:
+		guild = message.author.guild
+		category = bot.get_channel(944325827405946900)
+		await message.author.send(f'Your application is being submitted {message.author}')
+		await message.delete()
+		overwrites = {
+			guild.default_role: discord.PermissionOverwrite(read_messages=False),
+			guild.me: discord.PermissionOverwrite(read_messages=True)
+		}
+		channel = await guild.create_text_channel(message.author.nick, overwrites=overwrites, category=category)
+		message = await channel.send(f'<@&943960574226726956> {message.author.mention} Just Submitted a Application Request!\n{message.content}')
+		await message.add_reaction('✅')
+		support.append(message.id)
+@bot.event
+async def on_raw_reaction_add(payload):
+	if payload.member.bot == True:
+		return
+	if payload.message_id in support:
+		if str(payload.emoji) == '✅':
+			print("working")
+			await bot.get_channel(payload.channel_id).delete()
+
+
 # This Function gets squadron information
 def getsquadnames():
     content = urllib.request.urlopen('https://stats.warbrokers.io/squads/Duck')
