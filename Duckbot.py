@@ -84,7 +84,7 @@ async def unmute(ctx, member: discord.Member):
              help='This command will change the nickname of a user')
 async def nick(ctx, member: discord.Member, nick):
     if ctx.message.author.guild_permissions.administrator == True or ctx.message.author.id == 592430350630912004:
-        await member.edit(nick=nick)
+        await member.edit(nick=str(nick))
         await ctx.send(f'Nickname was changed for {member.mention} ')
 
 
