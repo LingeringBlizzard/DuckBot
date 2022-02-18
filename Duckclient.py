@@ -71,7 +71,7 @@ async def on_message(message):
 			run = True
 			await message.delete()
 			channel = message.channel
-			msg = await channel.send('Server region\n🇺🇸 - USA_Central\🌉 - USA_West\🗽 - USA_East\n🇮🇳 - India\n🇬🇧 - Europe\n🇦🇺 - Australia\n🇨🇳 - Asia')
+			msg = await channel.send('Server region\nn🇺🇸 - USA_Central\n🌉 - USA_West\n🗽 - USA_East\n🇮🇳 - India\n🇬🇧 - Europe\n🇦🇺 - Australia\n🇨🇳 - Asia')
 			await msg.add_reaction('🇺🇸')
 			await msg.add_reaction('🌉')
 			await msg.add_reaction('🗽')
