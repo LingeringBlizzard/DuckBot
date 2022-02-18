@@ -18,8 +18,11 @@ async def on_raw_reaction_add(payload):
 		if str(payload.emoji) == '🇺🇸':
 			role = get(user.guild.roles, name="US_Central")
 			await payload.member.add_roles(role)
-		elif str(payload.emoji) == '🇺🇲':
+		elif str(payload.emoji) == '🌉':
 			role = get(user.guild.roles, name="US_West")
+			await payload.member.add_roles(role)
+		elif str(payload.emoji) == '🗽':
+			role = get(user.guild.roles, name="US_East")
 			await payload.member.add_roles(role)
 		elif str(payload.emoji) == '🇮🇳':
 			role = get(user.guild.roles, name="India")
@@ -68,9 +71,10 @@ async def on_message(message):
 			run = True
 			await message.delete()
 			channel = message.channel
-			msg = await channel.send('Server region\n🇺🇸 - USA\n🇺🇲 - USA_West\n🇮🇳 - India\n🇬🇧 - Europe\n🇦🇺 - Australia\n🇨🇳 - Asia')
+			msg = await channel.send('Server region\n🇺🇸 - USA_Central\🌉 - USA_West\🗽 - USA_East\n🇮🇳 - India\n🇬🇧 - Europe\n🇦🇺 - Australia\n🇨🇳 - Asia')
 			await msg.add_reaction('🇺🇸')
-			await msg.add_reaction('🇺🇲')
+			await msg.add_reaction('🌉')
+			await msg.add_reaction('🗽')
 			await msg.add_reaction('🇮🇳')			
 			await msg.add_reaction('🇬🇧')
 			await msg.add_reaction('🇦🇺')
@@ -108,7 +112,7 @@ async def on_message(message):
 			run = True
 			await message.delete()
 			channel = message.channel
-			msg = await channel.send('Random Roles\n📅 Server Updates\n🎉 Events \n📣 announcements')
+			msg = await channel.send('Random Roles\n📅 - Server Updates\n🎉 - Events \n📣 - Announcements')
 			await msg.add_reaction('📅')
 			await msg.add_reaction('🎉')
 			await msg.add_reaction('📣')
