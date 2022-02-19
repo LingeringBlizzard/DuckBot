@@ -18,30 +18,36 @@ client = discord.Client()
 
 @bot.event
 async def on_message(message):
-	print(message.channel.id)
-	if message.channel.id == 944297505821188157:
-		guild = message.author.guild
-		category = bot.get_channel(944325827405946900)
-		await message.author.send(f'Your application is being submitted {message.author}')
-		await message.delete()
-		overwrites = {
-			guild.default_role: discord.PermissionOverwrite(read_messages=False),
-			guild.me: discord.PermissionOverwrite(read_messages=True)
-		}
-		channel = await guild.create_text_channel(message.author.nick, overwrites=overwrites, category=category)
-		message = await channel.send(f'<@&943960574226726956> {message.author.mention} Just Submitted a Application Request!\n{message.content}')
-		await message.add_reaction('✅')
-		support.append(message.id)
+	message1 = message
+	try:
+		if message.channel.id == 944297505821188157:
+			guild = message.guild
+			category = bot.get_channel(944325827405946900)
+			await message.delete()
+			overwrites = {
+				guild.default_role: discord.PermissionOverwrite(read_messages=False),
+				guild.me: discord.PermissionOverwrite(read_messages=True,view_channel=True),
+				message.author: discord.PermissionOverwrite(read_messages=True),
+				message.guild.get_role(943960574226726956): discord.PermissionOverwrite(read_messages=True)
+			}
+
+			channel = await guild.create_text_channel(message.author.name, overwrites=overwrites, category=category)
+			message = await channel.send(f'<@&943960574226726956> {message.author.mention} Just Submitted a Application Request! To close this Application Click the ✅\n{message.content}')
+			await message.add_reaction('✅')
+			await message.pin()
+			await message1.author.send(f'Your message has been submitted {message1.author}. Here is where you can check on it {channel.mention}')
+			support.append(message.id)
+	except:
+		print("error")
+		return
 @bot.event
 async def on_raw_reaction_add(payload):
 	if payload.member.bot == True:
 		return
+	payload.message_id
 	if payload.message_id in support:
 		if str(payload.emoji) == '✅':
-			print("working")
 			await bot.get_channel(payload.channel_id).delete()
-
-
 # This Function gets squadron information
 def getsquadnames():
     content = urllib.request.urlopen('https://stats.warbrokers.io/squads/Duck')
